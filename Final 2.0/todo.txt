@@ -1,0 +1,7 @@
+1. Create a regen health
+2. Add the weather to accidents fxn
+3. Next Landmark fxn
+4. Press Enter to Continue
+5. Update the screen instead of printing more
+6. Add starving in
+7. Center the text
