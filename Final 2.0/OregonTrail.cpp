@@ -215,13 +215,13 @@ void OregonTrail::victoryPrompt() {
 }
 
 
-int OregonTrail::accident() {
+int OregonTrail::accident() { // if no damage then heals
   int accidentChance = 100;
   int r = rand() % accidentChance;
   if(r < 50) { // 50% chance of being fine
-    return 0;
+    return 1;
   } else if (r >= 50 && r < 75) { // 25% chance of getting sick
-    int diseaseDamage[3] = {20, 30, 25};
+    int diseaseDamage[3] = {-20, -30, -25};
     std::string diseaseType[3] = {"Dystentary", "Smallpox", "Measels"};
     int diseaseChance = 15; // has a 20% chance of catching anything
     int r1 = rand() % diseaseChance;
@@ -229,10 +229,10 @@ int OregonTrail::accident() {
       std::cout << P1.getName() << " has " << diseaseType[r1] << std::endl;
       return diseaseDamage[r1];
     } else {
-      return 0;
+      return 1;
     }
   } else {  // 25% chance of getting hurt
-    int eventDamage[3] = {5, 1, 10};
+    int eventDamage[3] = {-5, -1, -10};
     std::string eventType[3] = {"has a broken leg!", "got frost bite!", "got attacked by a bear!"};
     int eventChance = 9; // has a 33% chance of really getting hurt
     int r2 = rand() % eventChance;
@@ -240,7 +240,7 @@ int OregonTrail::accident() {
       std::cout << P1.getName() << " " << eventType[r2] << std::endl;
       return eventDamage[r2];
     } else {
-      return 0;
+      return 1;
     }
   }
 }
@@ -303,21 +303,20 @@ void OregonTrail::journey() {
     std::cout << "Food: " << P1.getRations() << std::endl;
     std::cout << "Next landmark:" << std::endl;
     std::cout << "Miles traveled: "<< milesTraveled << std::endl;
-    P1.newHealth(accident());
-
     std::cout << "-----------------=====+=====-----------------" << std::endl;
+    generateDate(); // updates
+    P1.newHealth(accident());
+    P1.newRations(-2);
+
     milesTraveled  += 25;
     displayTurns -= 3;
     days = days + 3;
-    generateDate(); // updates date
-    int rations = -2;
-  
-    P1.newRations(rations);
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    if(isDead(P1.getHealth())){
+
+    if(isDead(P1.getHealth())){ // check if alive
       gameOver(P1.getHealth(), P1.getName());
       return;
     }
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   }
   totalDays += days;
 }

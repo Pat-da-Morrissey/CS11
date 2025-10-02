@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <string>
+#include <iostream>
 
 class Player {
 
@@ -10,8 +11,16 @@ class Player {
   ~Player() {}
 
   // Updates Player Status
-  void newHealth(int damage) {health = health - damage;}
-  void newRations(int new_rations) {rations = rations + new_rations;}
+  void newHealth(int damage) {
+    if(health == 100 && damage > 0) {
+      return;
+    }
+    health += damage;
+  }
+  void newRations(int new_rations) {
+    
+    rations += new_rations;
+  }
 
   // Returns the Status
   void getStatus();

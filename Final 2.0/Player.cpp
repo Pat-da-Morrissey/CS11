@@ -4,13 +4,11 @@
 #include "Player.h"
 
 
-Player::Player(){
-  health = 100;
-  rations = 100;
-}
+Player::Player() {}
+
 Player::Player(std::string initial_name){
   name = initial_name;
-  health = 1000;
+  health = 100;
   rations = 100;
 }
 
