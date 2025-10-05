@@ -3,7 +3,6 @@
 #include <string>
 #include "Player.h"
 
-
 Player::Player() {}
 
 Player::Player(std::string initial_name){

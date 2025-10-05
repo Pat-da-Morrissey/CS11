@@ -35,18 +35,27 @@ class OregonTrail {
   int monthIndex;
   int year = 1848;
   int milesTraveled;
-  int location;
- 
-  std::string weather[6] = {"Hot", "Warm", "Cool", "Cold", "Cloudy", "Raining"};
-  std::string seasons[4] = {"Winter", "Spring", "Summer", "Fall"};
-  std::string checkPoints[9] = {"Independance", "Fort Kearny", "Chimney Rock", "Fort Laramie", "Independance Rock", "Soda Srings", "Fort Bosie", "The Dales", "Oregon City"};
-  std::string months[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+  int nextLandmark;
+  int curLandMark;
+  static const int totalLandMarks = 18;
+  int landMarkDistance[totalLandMarks] = {0, 102, 82, 118, 250, 86, 190, 102, 57, 125, 150, 57, 182, 
+    113, 160, 55, 120, 100};
+
   std::string date;
   std::string currWeather;
+  std::string weather[6] = {"Hot", "Warm", "Cool", "Cold", "Cloudy", "Raining"};
+  std::string seasons[4] = {"Winter", "Spring", "Summer", "Fall"};
+  std::string landMarks[totalLandMarks] = {"Independance", "Kansas River", "Big Blue River", "Fort Kearny",
+    "Chimney Rock", "Fort Laramie", "Independance Rock", "South Pass", "Green River", "Fort Bridger",
+    "Soda Srings", "Fort Hall", "Snake River", "Fort Bosie", "Blue Mountains", "Fort Walla Walla", 
+    "The Dalles", "Willamette Valley"};
+  std::string months[12] = {"January", "February", "March", "April", "May", "June", "July", "August",
+   "September", "October", "November", "December"};
 
   bool winterStorm = false;
   bool summerDrought = false;
   bool rainStorm = false;
+  bool choice = false;
 
   void generateDate() {
     if(days > 28 && monthIndex == 1) { // February

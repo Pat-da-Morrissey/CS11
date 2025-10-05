@@ -1,6 +1,6 @@
 2. Add the weather to accidents fn
-3. Next Landmark fn
 4. Press Enter to Continue
 5. Update the screen instead of printing more
-6. Add starving in
 7. Center the text
+8. Better healing handling
+9. (Currently working on) Accurate distances between landmarks

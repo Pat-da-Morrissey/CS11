@@ -10,8 +10,9 @@
 
 OregonTrail::OregonTrail() {
   milesTraveled = 0;
-  location = 0;
+  curLandMark = 0;
   totalDays = 0;
+  nextLandmark = 0;
   startGame();
 }
 
@@ -29,11 +30,11 @@ void OregonTrail::startGame() {
     std::string start;
     std::cin >> start; 
  
-    while(location != 8 && !isDead(P1.getHealth())) { // location 8 is Oregon City
+    while(curLandMark != totalLandMarks && !isDead(P1.getHealth())) { // location 8 is Oregon City
       generateDate();
       journey();
       if(!isDead(P1.getHealth())) {
-        location++;
+        curLandMark++;
         checkPointPrompt();
       }
     }
@@ -150,7 +151,7 @@ void OregonTrail::checkPointPrompt() {
   int input = -1;
   while(input == -1) {
     std::cout << "---------====+====---------" << std::endl;
-    std::cout << "       " << checkPoints[location] << std::endl;                    // to be fixed!
+    std::cout << "       " << landMarks[curLandMark] << std::endl;                    // to be fixed!
     std::cout << "       "<< date << std::endl;
     std::cout << "---------------------------" << std::endl;
     std::cout << "You may:" << std::endl; 
@@ -168,22 +169,19 @@ void OregonTrail::checkPointPrompt() {
       input = -1;
     } else if(input == 2) {
       std::cout << "Looking for food..." << std::endl;
-      int newFood = 0;
       std::string moveOn;
       int r = rand() % 10;
       if(r >= 1) {
         std::cout << "Lucky you, you found 10 rations of food!" << std::endl;
-        newFood = 10;
-        P1.newRations(newFood);
+        P1.newRations(10);
       } else if(r >=2 && r <= 7){
         std::cout << "You found nothing" << std::endl;
       } else if(r > 8) {
         std::cout << "You wasted 1 day finding nothing..." << std::endl;
         std::cout << "and you used up 10 rations in the process. Next time learn how to shoot properly!" << std::endl;
-        newFood = -10;
         days++;
         generateDate();
-        P1.newRations(newFood);         
+        P1.newRations(-10);         
       }
       std::cout << "Come on! Lets get a move on! Theirs still a long ways to go!" << std::endl;
       std::cout << "Enter anything to continue: ";
@@ -215,7 +213,7 @@ void OregonTrail::victoryPrompt() {
 }
 
 
-int OregonTrail::accident() { // if no damage then heals
+int OregonTrail::accident() { // if no damage then heals fix healing
   int accidentChance = 100;
   int r = rand() % accidentChance;
   if(r < 50) { // 50% chance of being fine
@@ -291,6 +289,7 @@ void OregonTrail::gameOver(int health, std::string Player) {
 
 void OregonTrail::journey() {
   int displayTurns = 45;
+  nextLandmark = landMarkDistance[curLandMark];
   for(int start_checkpoint = 0; start_checkpoint < 11; ++start_checkpoint) {
     std::cout << "-----------------=====+=====-----------------" << std::endl;
     std::cout << std::setw(displayTurns) <<"        _____ " << std::endl;
@@ -301,13 +300,14 @@ void OregonTrail::journey() {
     std::cout << "Weather: " << weatherForcast() << std::endl;
     std::cout << "Health: " << P1.getHealth() << std::endl;
     std::cout << "Food: " << P1.getRations() << std::endl;
-    std::cout << "Next landmark:" << std::endl;
+    std::cout << "Next landmark: " << nextLandmark << " miles" << std::endl;
     std::cout << "Miles traveled: "<< milesTraveled << std::endl;
     std::cout << "-----------------=====+=====-----------------" << std::endl;
     generateDate(); // updates
     P1.newHealth(accident());
-    P1.newRations(-2);
+    P1.newRations(-2); // test
 
+    nextLandmark -= 25;
     milesTraveled  += 25;
     displayTurns -= 3;
     days = days + 3;

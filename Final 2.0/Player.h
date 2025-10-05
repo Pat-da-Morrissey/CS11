@@ -12,14 +12,20 @@ class Player {
 
   // Updates Player Status
   void newHealth(int damage) {
-    if(health == 100 && damage > 0) {
+    if(health >= 100 && damage > 0) {
       return;
     }
     health += damage;
   }
+
   void newRations(int new_rations) {
-    
     rations += new_rations;
+    if(rations < 0) {
+      rations = 0;
+    }
+    if(rations < 20) {
+      newHealth(-5);
+    }
   }
 
   // Returns the Status
